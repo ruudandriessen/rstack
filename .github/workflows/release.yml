@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: bun run check:install
+      - name: Prepare the version PR
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: bun run version:skills
+          title: "chore(release): version rStack"
+          commit: "chore(release): version rStack"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create the GitHub release
+        id: release
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: bun run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Refresh skills.sh
+        if: steps.release.outcome == 'success' && (steps.release.outputs.created == 'true' || github.event_name == 'workflow_dispatch')
+        working-directory: ${{ runner.temp }}
+        env:
+          DISABLE_TELEMETRY: ""
+          DO_NOT_TRACK: ""
+        run: >-
+          bun "$GITHUB_WORKSPACE/node_modules/skills/bin/cli.mjs"
+          add "https://github.com/$GITHUB_REPOSITORY/tree/$GITHUB_SHA"
+          --skill '*' --agent codex --copy --yes
