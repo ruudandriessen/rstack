@@ -1,6 +1,6 @@
 ---
 name: yeet
-description: Open a draft PR, keep its CI green, and work through the user's review comments. Once ready for review, explain feedback and wait for direction. Trigger on "yeet".
+description: Open a draft PR, keep its CI green, and work through review comments. Fix clear defects from any reviewer, including bots and agents, and surface only debatable feedback. Trigger on "yeet".
 disable-model-invocation: true
 license: MIT
 compatibility: "Requires Git, an authenticated GitHub CLI, and repository push access."
@@ -8,7 +8,7 @@ compatibility: "Requires Git, an authenticated GitHub CLI, and repository push a
 
 # Yeet
 
-Push the current work, open a draft PR, get CI green, and work through the user's comments until they are satisfied. When the user marks the PR ready for review, switch to explaining feedback and recommending what to address.
+Push the current work, open a draft PR, get CI green, and work through review comments until the user is satisfied. Fix clearly correct findings from any reviewer right away. Bring the user only the feedback that needs their judgment.
 
 ## Prepare the change
 
@@ -32,11 +32,13 @@ Tell the user the draft is open and ready for their comments. Include the link a
 
 Identify the requesting user's review account from established context. If it is unknown, ask for the account while completing the draft. Do not assume the PR author, authenticated account, or any collaborator is that person. Accept feedback from another review tool only when its source is attributable to the user.
 
-Watch PR conversation comments, submitted reviews, and inline threads, including replies and edits. Act on the user's feedback within the task's scope without asking them to repeat it in chat. Explain comments from other people or bots and recommend whether to address them; wait for the user's direction before acting on those comments.
+Watch PR conversation comments, submitted reviews, and inline threads, including replies and edits. Act on the user's feedback within the task's scope without asking them to repeat it in chat.
+
+For comments from other people, bots, or review agents, verify each finding against the code. Fix it immediately when it is clearly correct and in scope, such as a real bug, a broken edge case, a failing type, or a factual error, and the fix has one obvious shape. Surface a finding to the user with your recommendation when it is debatable: a style or design preference, a trade-off, a scope change, a finding you cannot confirm, or one with several reasonable fixes. Leave findings that are clearly wrong unresolved and briefly tell the user why you skipped them.
 
 Read the full thread and inspect the code before changing it. Fix the issue, run affected checks, and push the change. Resolve a thread only after verifying that the pushed change addresses it. Leave questions, disputed findings, and blocked work unresolved and explain what needs the user's judgment. Do not post separate replies unless asked.
 
-Tell the user what changed and keep watching for their next comments. Repeat until they mark the PR ready, close it, or ask you to stop.
+Tell the user what changed, including fixes made for other reviewers, and keep watching for their next comments. Repeat until they mark the PR ready, close it, or ask you to stop.
 
 ## Keep CI green
 
@@ -48,9 +50,9 @@ Never skip, disable, or weaken a check, test, or lint rule to make it pass unles
 
 ## Once the PR is ready for review
 
-Explain new feedback to the user in plain language. State what the reviewer means, whether the code supports the finding, and whether you recommend fixing it now, deferring it, or leaving the code as it is.
+Keep fixing clearly correct, in-scope findings from any reviewer, including bots and agents, using the same test as in draft. Verify, push, resolve the thread, and report what you fixed.
 
-Wait for the user's decision before editing, pushing a review fix, replying, or resolving a thread. This applies to all reviewers, including the requesting user. Follow an explicit instruction to handle a particular finding, then verify and report the result.
+For debatable feedback, explain it to the user in plain language. State what the reviewer means, whether the code supports the finding, and whether you recommend fixing it now, deferring it, or leaving the code as it is. Wait for the user's decision before editing, replying, or resolving those threads. This includes the requesting user's comments, which may now be questions for other reviewers rather than instructions. Follow an explicit instruction to handle a particular finding, then verify and report the result.
 
 ## Keep the loop accurate
 
@@ -58,7 +60,7 @@ Inspect the host's available PR event subscriptions, listeners, and wake tools f
 
 Poll only for events the host cannot deliver, with bounded waits while the session runs. Track the PR, comment IDs and edits, and the last processed state so reconnecting does not repeat completed work. Fetch feedback received while you were fixing the previous batch.
 
-Recheck the PR's draft status before starting a fix and before pushing or resolving threads. If it became ready, pause pending review changes and present them for the user's decision. If it returns to draft, resume the draft workflow. Stop on merge or closure, or when the user asks.
+Recheck the PR's draft status before starting a fix and before pushing or resolving threads. If it became ready, pause pending changes for debatable feedback and present them for the user's decision. If it returns to draft, resume the draft workflow. Stop on merge or closure, or when the user asks.
 
 After the PR is ready, explain CI failures and recommend a fix before proceeding unless the user already authorized that work.
 
