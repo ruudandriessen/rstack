@@ -30,7 +30,7 @@ Tell the user the draft is open and ready for their comments. Include the link a
 
 ## While the PR is a draft
 
-Identify the requesting user's review account from established context. If it is unknown, ask for the account while completing the draft. Do not assume the PR author, authenticated account, or any collaborator is that person. Accept feedback from another review tool only when its source is attributable to the user.
+Treat the authenticated GitHub account as the requesting user's review account unless the user names a different one. Ask for the account while completing the draft only when the authenticated account looks like a bot or service account, or is not the PR author. Do not assume any other collaborator is that person. Accept feedback from another review tool only when its source is attributable to the user.
 
 Watch PR conversation comments, submitted reviews, and inline threads, including replies and edits. Act on the user's feedback within the task's scope without asking them to repeat it in chat.
 
