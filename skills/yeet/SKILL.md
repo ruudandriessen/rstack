@@ -16,7 +16,7 @@ Inspect the branch, base, diff, and worktree. Include only work in scope and pre
 
 Run checks appropriate to the change and resolve failures it introduced. If GitHub access is missing, finish local preparation and report the specific access needed.
 
-Use Conventional Commits with an imperative subject, `type(scope): summary`, without a trailing period. Follow configured commit signing, including when rewriting commits. Do not silently fall back to unsigned commits when signing fails.
+Use Conventional Commits with an imperative subject, `type(scope): summary`, without a trailing period.
 
 After the subject, use Linux-style git trailers only. Add `Assisted-by: Vendor:model` for models known to have contributed; do not invent model identities. Preserve authorship and existing trailers when amending.
 
