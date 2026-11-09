@@ -1,6 +1,6 @@
 ---
 name: yeet
-description: Open a draft PR, keep its CI green and up to date with its base, and work through review comments. Fix AI review findings you agree with and clear defects from anyone, and surface only feedback that needs the user's judgment. Trigger on "yeet".
+description: Open a draft PR, keep its CI green and up to date with its base, and work through review comments. Fix agreed findings and surface only feedback that needs the user's judgment. Trigger on "yeet".
 disable-model-invocation: true
 license: MIT
 compatibility: "Requires Git, an authenticated GitHub CLI, and repository push access."
@@ -34,25 +34,17 @@ Treat the authenticated GitHub account as the requesting user's review account u
 
 Watch PR conversation comments, submitted reviews, and inline threads, including replies and edits. Act on the user's feedback within the task's scope without asking them to repeat it in chat.
 
-For comments from bots, AI review agents, and their replies, verify each finding against the code. When you agree with it after checking, fix it right away without asking, including style suggestions and small design changes. Surface it to the user only when you disagree but cannot rule it out, when it would change the PR's scope or product behavior beyond its intent, or when you cannot confirm it.
-
-For comments from other people, verify each finding against the code. Fix it immediately when it is clearly correct and in scope, such as a real bug, a broken edge case, a failing type, or a factual error, and the fix has one obvious shape. Surface a finding to the user with your recommendation when it is debatable: a style or design preference, a trade-off, a scope change, a finding you cannot confirm, or one with several reasonable fixes.
-
-Leave findings that are clearly wrong unresolved and mention them to the user in one line with the reason.
+For comments from other people, bots, or review agents, verify each finding against the code. Fix bot and agent findings you agree with right away. Fix findings from people right away when they are clearly correct, in scope, and have one obvious fix. Surface the rest to the user with your recommendation: trade-offs, scope changes, or findings you cannot confirm. Leave clearly wrong findings unresolved and say why in one line.
 
 Read the full thread and inspect the code before changing it. Fix the issue, run affected checks, and push the change. Resolve a thread only after verifying that the pushed change addresses it. Leave questions, disputed findings, and blocked work unresolved and explain what needs the user's judgment. Do not post separate replies unless asked.
 
 Tell the user what changed, including fixes made for other reviewers, and keep watching for their next comments. Repeat until they mark the PR ready, close it, or ask you to stop.
 
-## Report only what matters
-
-Message the user only when you changed something, need their decision, or hit a blocker. Do not report events that needed no action, such as a passing check, a new comment you already handled silently, an unchanged PR, a listener heartbeat, or an empty poll. Keep updates short: what you changed and why, what needs their judgment, and the link when useful. Do not narrate the watching loop.
+Only message the user when you changed something, need a decision, or are blocked. Stay silent about events that needed no action.
 
 ## Keep the branch up to date
 
-Check whether the PR's base has moved whenever you handle an event and before pushing. When the base has moved and the PR conflicts with it, or the repository requires branches to be up to date, fetch and rebase onto the latest base. Rebase otherwise too when the base moved substantially under files this PR touches.
-
-Resolve conflicts by preserving both the PR's intent and the base's changes; read the incoming commits rather than picking a side. Rerun affected checks, then push with `--force-with-lease`. Never force-push a branch other people commit to without asking; merge the base instead if the user prefers. If a conflict needs a judgment call about which behavior should win, stop and ask the user with your recommendation.
+When the PR conflicts with its base or falls behind a required up-to-date base, rebase onto the latest base, resolve conflicts preserving both sides' intent, rerun affected checks, and push with `--force-with-lease`. Ask the user when a conflict needs a judgment call or others also commit to the branch.
 
 ## Keep CI green
 
@@ -64,13 +56,13 @@ Never skip, disable, or weaken a check, test, or lint rule to make it pass unles
 
 ## Once the PR is ready for review
 
-Keep fixing AI review findings you agree with and clearly correct, in-scope findings from people, using the same tests as in draft. Keep the branch rebased and CI green. Verify, push, resolve the thread, and report what you fixed.
+Keep fixing findings by the same rules as in draft, and keep the branch rebased and CI green. Verify, push, resolve the thread, and report what you fixed.
 
 For debatable feedback, explain it to the user in plain language. State what the reviewer means, whether the code supports the finding, and whether you recommend fixing it now, deferring it, or leaving the code as it is. Wait for the user's decision before editing, replying, or resolving those threads. This includes the requesting user's comments, which may now be questions for other reviewers rather than instructions. Follow an explicit instruction to handle a particular finding, then verify and report the result.
 
 ## Keep the loop accurate
 
-Inspect the host's available PR event subscriptions, listeners, and wake tools first. Use an existing subscription or register one for this PR through the supported mechanism, then confirm it is active. Prefer event delivery to a polling loop. Subscribe to comments, reviews, check runs, base branch updates, mergeability, and PR state changes where supported; fetch the current PR and thread when an event arrives.
+Inspect the host's available PR event subscriptions, listeners, and wake tools first. Use an existing subscription or register one for this PR through the supported mechanism, then confirm it is active. Prefer event delivery to a polling loop. Subscribe to comments, reviews, check runs, conflicts, and PR state changes where supported; fetch the current PR and thread when an event arrives.
 
 Poll only for events the host cannot deliver, with bounded waits while the session runs. Track the PR, comment IDs and edits, and the last processed state so reconnecting does not repeat completed work. Fetch feedback received while you were fixing the previous batch.
 
