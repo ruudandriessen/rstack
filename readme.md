@@ -14,6 +14,7 @@ The agent opens a draft PR, listens for your comments, checks its fixes, and res
 
 | Skill | What it does |
 | --- | --- |
+| [council](skills/council/SKILL.md) | Get review from Claude Opus, GPT Sol, and Grok, and loop until they agree. |
 | [unslop](skills/unslop/SKILL.md) | Cut filler and template language from prose. |
 | [no-comments](skills/no-comments/SKILL.md) | Remove redundant comments and flag unclear code. |
 | [yeet](skills/yeet/SKILL.md) | Open a draft PR, fix clear review findings, and surface debatable ones. |
