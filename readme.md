@@ -18,7 +18,7 @@ The agent opens a draft PR, listens for your comments, checks its fixes, and res
 | [babysit](skills/babysit/SKILL.md) | Watch a PR: keep CI green, fix clear review findings, and surface debatable ones. |
 | [unslop](skills/unslop/SKILL.md) | Cut filler and template language from prose. |
 | [no-comments](skills/no-comments/SKILL.md) | Remove redundant comments and flag unclear code. |
-| [yeet](skills/yeet/SKILL.md) | Commit, open a draft PR, and babysit it. Requires babysit. |
+| [yeet](skills/yeet/SKILL.md) | Strip redundant comments, commit, open a draft PR, and babysit it. Requires babysit. |
 
 ## Install
 

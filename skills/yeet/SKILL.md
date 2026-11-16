@@ -3,7 +3,7 @@ name: yeet
 description: Commit and push the current work, open a draft PR, then babysit it until it merges or closes. Trigger on "yeet".
 disable-model-invocation: true
 license: MIT
-compatibility: "Requires Git, an authenticated GitHub CLI, repository push access, and the rStack babysit skill."
+compatibility: "Requires Git, an authenticated GitHub CLI, repository push access, and the rStack babysit skill. Uses the rStack no-comments skill when installed."
 ---
 
 # Yeet
@@ -12,7 +12,7 @@ Push the current work, open a draft PR, and hand it to the babysit skill.
 
 ## Prepare the change
 
-Inspect the branch, base, diff, and worktree. Commit only work in scope, preserve unrelated changes, and use a feature branch when needed. Never force-push a shared default branch. Run appropriate checks and fix failures the change introduced. If GitHub access is missing, finish locally and report what access is needed.
+Inspect the branch, base, diff, and worktree. Commit only work in scope, preserve unrelated changes, and use a feature branch when needed. Never force-push a shared default branch. Before committing, follow the no-comments skill on the change in scope; if it is not installed, skip this step. Run appropriate checks and fix failures the change introduced. If GitHub access is missing, finish locally and report what access is needed.
 
 Use Conventional Commits, `type(scope): summary`, imperative and without a trailing period. Follow the subject with Linux-style trailers only, adding `Assisted-by: Vendor:model` for models known to have contributed. Preserve authorship and existing trailers when amending.
 
