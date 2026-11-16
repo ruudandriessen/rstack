@@ -1,5 +1,11 @@
 # rStack
 
+## 0.3.0
+
+### Minor Changes
+
+- 9789c8d: yeet now runs no-comments on the change before committing, when that skill is installed.
+
 ## 0.2.1
 
 ### Patch Changes
