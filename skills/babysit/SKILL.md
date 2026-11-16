@@ -37,7 +37,9 @@ When the PR conflicts with its base or falls behind a required up-to-date base, 
 
 ## Keep CI green
 
-The PR is not done while a required check fails or is pending on the latest commit. Read failing logs, reproduce locally where possible, fix the cause, push, and repeat. Rerun an apparent flake once and report it if it fails again. Report failures that also occur on the base branch or need access you lack, with evidence. Never skip, disable, or weaken a check unless the user asks. Once the PR is ready, recommend a fix and wait unless the user already authorized the work.
+The PR is not done while a required check fails or is pending on the latest commit. Read failing logs, reproduce locally where possible, fix the cause, push, and repeat. Rerun an apparent flake once and report it if it fails again. Report failures that also occur on the base branch or need access you lack, with evidence. Never skip, disable, or weaken a check unless the user asks.
+
+Fix CI failures without waiting, whether the PR is a draft, ready, or approved. Approvals do not freeze the branch, and an approved PR with a red check is still not done. If the push may dismiss approvals, say so when you report the fix. Ask first only when the fix needs a judgment call, such as changing behavior reviewers approved or touching code outside the PR's scope.
 
 ## Keep the loop running
 
