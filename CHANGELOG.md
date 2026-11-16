@@ -1,5 +1,11 @@
 # rStack
 
+## 0.2.1
+
+### Patch Changes
+
+- b99088d: babysit now fixes failing CI and rebases away merge conflicts on ready and approved PRs without waiting, and asks only when it is unsure of the fix.
+
 ## 0.2.0
 
 ### Minor Changes
