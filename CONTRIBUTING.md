@@ -30,7 +30,7 @@ policy:
   allow_implicit_invocation: false
 ```
 
-Do not add an `openai.yaml` file when no Codex-specific setting is needed. Avoid making one skill depend on another. When a skill does build on another, name the dependency in `compatibility`, group both in [skills.sh.json](skills.sh.json), and say what happens when the other skill is missing.
+Do not add an `openai.yaml` file when no Codex-specific setting is needed. Avoid making one skill depend on another. When a skill does build on another, name the dependency in `compatibility`, group both in [skills.sh.json](skills.sh.json), say what happens when the other skill is missing, and leave model invocation enabled on the skill being depended on so the agent can load it.
 
 ## Write instructions
 

@@ -1,7 +1,6 @@
 ---
 name: babysit
-description: Watch a pull request until it merges or closes. Keep CI green and the branch up to date with its base, fix agreed review findings, and surface only feedback that needs the user's judgment. Trigger on "babysit".
-disable-model-invocation: true
+description: Watch a pull request until it merges or closes. Keep CI green and the branch up to date with its base, fix agreed review findings, and surface only feedback that needs the user's judgment. Use when the user says "babysit" or another skill, such as yeet, hands off a PR to watch.
 license: MIT
 compatibility: "Requires Git, an authenticated GitHub CLI, and repository push access."
 ---
