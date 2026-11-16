@@ -33,7 +33,7 @@ Use Conventional Commits, `type(scope): summary`, imperative and without a trail
 
 ## Keep the branch up to date
 
-When the PR conflicts with its base or falls behind a required up-to-date base, rebase onto the latest base, resolve conflicts preserving both sides' intent, rerun affected checks, and push with `--force-with-lease`. Ask the user when a conflict needs a judgment call or others also commit to the branch.
+Check mergeability on every wake. When the PR has merge conflicts with its base or falls behind a required up-to-date base, rebase onto the latest base without waiting, whether the PR is a draft, ready, or approved. Resolve conflicts preserving both sides' intent, rerun affected checks, and push with `--force-with-lease`. Ask first only when you are genuinely unsure how to resolve a conflict.
 
 ## Keep CI green
 
