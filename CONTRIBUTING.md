@@ -30,13 +30,13 @@ policy:
   allow_implicit_invocation: false
 ```
 
-Do not add an `openai.yaml` file when no Codex-specific setting is needed. Do not make one skill depend on another being installed.
+Do not add an `openai.yaml` file when no Codex-specific setting is needed. Avoid making one skill depend on another. When a skill does build on another, name the dependency in `compatibility`, group both in [skills.sh.json](skills.sh.json), and say what happens when the other skill is missing.
 
 ## Write instructions
 
 Use plain words and concrete steps. Keep facts, commands, and file paths accurate. Remove filler and unsupported claims. Follow the [unslop checklist](skills/unslop/SKILL.md) for prose. Preserve license text verbatim.
 
-Let the agent resolve routine uncertainty from available evidence. Define when a decision needs the user and what the agent can finish independently. Keep each installed skill self-contained; do not rely on the reader having this repository or its philosophy document.
+Let the agent resolve routine uncertainty from available evidence. Define when a decision needs the user and what the agent can finish independently. Keep each installed skill self-contained apart from declared skill dependencies; do not rely on the reader having this repository or its philosophy document.
 
 State what happens when a required tool is unavailable. Ask for authorization before a workflow sends messages or writes to an external service unless the user's request already authorizes that action.
 
